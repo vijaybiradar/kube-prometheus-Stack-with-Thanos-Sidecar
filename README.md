@@ -1761,12 +1761,21 @@ prometheus:
     thanos:
       baseImage: quay.io/thanos/thanos
       version: v0.24.0
-thanosService:
-  enabled: enabled
-  annotations: {}
-  labels: {}
-  externalTrafficPolicy: Cluster
-  type: ClusterIP
+  thanosService:
+    enabled: true # this will enable a service for service discovery
+    annotations: {}
+    labels: {}
+    externalTrafficPolicy: Cluster
+    type: ClusterIP
+    portName: grpc
+    port: 10901
+    targetPort: "grpc"
+    httpPortName: http
+    httpPort: 10902
+    targetHttpPort: "http"
+    clusterIP: ""
+    nodePort: 30901
+    httpNodePort: 30902
 ```
 prometheus-united-states.yaml:
 
@@ -1788,12 +1797,21 @@ prometheus:
     thanos:
       baseImage: quay.io/thanos/thanos
       version: v0.24.0
-thanosService:
-  enabled: enabled
-  annotations: {}
-  labels: {}
-  externalTrafficPolicy: Cluster
-  type: ClusterIP
+  thanosService:
+    enabled: true # this will enable a service for service discovery
+    annotations: {}
+    labels: {}
+    externalTrafficPolicy: Cluster
+    type: ClusterIP
+    portName: grpc
+    port: 10901
+    targetPort: "grpc"
+    httpPortName: http
+    httpPort: 10902
+    targetHttpPort: "http"
+    clusterIP: ""
+    nodePort: 30901
+    httpNodePort: 30902
 ```
 Upgrade Prometheus in each region with the new configuration:
 
