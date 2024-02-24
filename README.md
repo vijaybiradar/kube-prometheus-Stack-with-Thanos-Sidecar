@@ -1694,10 +1694,10 @@ volumePermissions:
 objstoreConfig: |-
   type: s3
   config:
-    bucket: thanos
-    endpoint: {{ include "thanos.minio.fullname" . }}.monitoring.svc.cluster.local:9000
-    access_key: minio
-    secret_key: KEY
+    bucket: thanos-prod-north-virginia
+    endpoint: s3.amazonaws.com
+    access_key: ${access_key}
+    secret_key: ${secret_key}
     insecure: true  
 querier:
   stores:
@@ -1720,7 +1720,7 @@ ruler:
           - alert: "PrometheusDown"
             expr: absent(up{prometheus="monitoring/prometheus-operator"})    
 minio:
-  enabled: true
+  enabled: false
   accessKey:
     password: "minio"
   secretKey:
