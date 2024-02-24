@@ -1748,7 +1748,7 @@ namespaceOverride: "europe"
 nodeExporter:
   enabled: false
 grafana:
-  enabled: false
+  enabled: true
 alertmanager:
   enabled: false
 kubeStateMetrics:
@@ -1785,7 +1785,7 @@ namespaceOverride: "united-states"
 nodeExporter:
   enabled: false
 grafana:
-  enabled: false
+  enabled: true
 alertmanager:
   enabled: false
 kubeStateMetrics:
