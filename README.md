@@ -1686,3 +1686,68 @@ volumePermissions:
     repository: bitnami/os-shell
     tag: 12-debian-12-r16
 ```
+
+
+ installing kube-prometheus-stack with Thanos sidecars. Here are the steps:
+
+Create or update the prometheus-europe.yaml and prometheus-united-states.yaml files with the Thanos sidecar configurations:
+
+prometheus-europe.yaml:
+
+```
+nameOverride: "eu"
+namespaceOverride: "europe"
+nodeExporter:
+  enabled: false
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    replicas: 2
+    replicaExternalLabelName: "replica"
+    prometheusExternalLabelName: "cluster"
+    thanos:
+      baseImage: quay.io/thanos/thanos
+      version: v0.24.0
+```
+prometheus-united-states.yaml:
+
+```
+nameOverride: "us"
+namespaceOverride: "united-states"
+nodeExporter:
+  enabled: false
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    replicaExternalLabelName: "replica"
+    prometheusExternalLabelName: "cluster"
+    thanos:
+      baseImage: quay.io/thanos/thanos
+      version: v0.24.0
+```
+Upgrade Prometheus in each region with the new configuration:
+
+```
+helm -n europe upgrade -i prometheus-europe prometheus-community/kube-prometheus-stack -f prometheus-europe.yaml
+```
+```
+helm -n united-states upgrade -i prometheus-united-states prometheus-community/kube-prometheus-stack -f prometheus-united-states.yaml
+```
+Check the status of Prometheus pods in each region:
+
+```
+kubectl -n europe get pods -l app.kubernetes.io/name=prometheus
+```
+```
+kubectl -n united-states get pods -l app.kubernetes.io/name=prometheus
+```
