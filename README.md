@@ -1690,8 +1690,7 @@ volumePermissions:
 
 **#with overide values**
 
-yaml
-Copy code
+```
 objstoreConfig: |-
   type: s3
   config:
@@ -1727,6 +1726,7 @@ minio:
   secretKey:
     password: "KEY"
   defaultBuckets: "thanos"
+```
 To install Thanos in the Thanos namespace using this configuration file, you can use the following Helm upgrade command:
 
 ```
