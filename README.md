@@ -1688,6 +1688,54 @@ volumePermissions:
 ```
 
 
+**#with overide values**
+
+yaml
+Copy code
+objstoreConfig: |-
+  type: s3
+  config:
+    bucket: thanos
+    endpoint: {{ include "thanos.minio.fullname" . }}.monitoring.svc.cluster.local:9000
+    access_key: minio
+    secret_key: KEY
+    insecure: true  
+querier:
+  stores:
+    - SIDECAR-SERVICE-IP-ADDRESS-1:10901
+    - SIDECAR-SERVICE-IP-ADDRESS-2:10901
+bucketweb:
+  enabled: true
+compactor:
+  enabled: true
+storegateway:
+  enabled: true
+ruler:
+  enabled: true
+  alertmanagers:
+    - http://prometheus-operator-alertmanager.monitoring.svc.cluster.local:9093
+  config: |-
+    groups:
+      - name: "metamonitoring"
+        rules:
+          - alert: "PrometheusDown"
+            expr: absent(up{prometheus="monitoring/prometheus-operator"})    
+minio:
+  enabled: true
+  accessKey:
+    password: "minio"
+  secretKey:
+    password: "KEY"
+  defaultBuckets: "thanos"
+To install Thanos in the Thanos namespace using this configuration file, you can use the following Helm upgrade command:
+
+```
+helm upgrade -i thanos bitnami/thanos --namespace thanos --values values.yaml
+```
+This command will upgrade or install the Thanos chart in the thanos namespace using the specified values.yaml configuration file.
+
+
+
  installing kube-prometheus-stack with Thanos sidecars. Here are the steps:
 
 Create or update the prometheus-europe.yaml and prometheus-united-states.yaml files with the Thanos sidecar configurations:
@@ -1713,6 +1761,12 @@ prometheus:
     thanos:
       baseImage: quay.io/thanos/thanos
       version: v0.24.0
+thanosService:
+  enabled: enabled
+  annotations: {}
+  labels: {}
+  externalTrafficPolicy: Cluster
+  type: ClusterIP
 ```
 prometheus-united-states.yaml:
 
@@ -1734,6 +1788,12 @@ prometheus:
     thanos:
       baseImage: quay.io/thanos/thanos
       version: v0.24.0
+thanosService:
+  enabled: enabled
+  annotations: {}
+  labels: {}
+  externalTrafficPolicy: Cluster
+  type: ClusterIP
 ```
 Upgrade Prometheus in each region with the new configuration:
 
@@ -1743,6 +1803,28 @@ helm -n europe upgrade -i prometheus-europe prometheus-community/kube-prometheus
 ```
 helm -n united-states upgrade -i prometheus-united-states prometheus-community/kube-prometheus-stack -f prometheus-united-states.yaml
 ```
+
+For Europe:
+
+```
+helm upgrade -n europe -i prometheus-europe prometheus-community/kube-prometheus-stack \
+  --set prometheus.thanos.create=true \
+  --set prometheus.service.type=ClusterIP \
+  --set prometheus.thanos.service.type=LoadBalancer \
+  -f prometheus-europe.yaml
+```
+For United States:
+
+```
+helm upgrade -n united-states -i prometheus-united-states prometheus-community/kube-prometheus-stack \
+  --set prometheus.thanos.create=true \
+  --set prometheus.service.type=ClusterIP \
+  --set prometheus.thanos.service.type=LoadBalancer \
+  -f prometheus-united-states.yaml
+```
+
+
+
 Check the status of Prometheus pods in each region:
 
 ```
