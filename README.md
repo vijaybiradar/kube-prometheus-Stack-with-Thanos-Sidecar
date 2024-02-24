@@ -1868,7 +1868,4 @@ Deploy MariaDB in each cluster with one master and one slave using the productio
 
 
 
-https://medium.com/@dikshantdevops/elevating-observability-unleashing-the-power-of-kube-prometheus-stack-with-thanos-sidecar-9d0c159bef2e
-https://medium.com/nerd-for-tech/deep-dive-into-thanos-part-ii-8f48b8bba132
-https://medium.com/hiredscore-engineering/using-thanos-to-store-prometheus-on-many-kubernetes-clusters-fd24b63873d8
-https://medium.com/@kakashiliu/deploy-prometheus-operator-with-thanos-60210eff172b
+
