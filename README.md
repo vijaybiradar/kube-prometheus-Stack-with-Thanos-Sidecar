@@ -218,6 +218,21 @@ helm get values thanos -n thanos -a --revision 1 -o yaml > fullvalues.yaml
 helm get values thanos -n thanos --revision 1 -o yaml > fullvalues.yaml
 ```
 
+Create a file named “thanos-storage-config.yaml” for S3 Storage configuration:
+```
+type: s3
+config:
+    bucket: thanos-prod-north-virginia
+    endpoint: s3.amazonaws.com
+    access_key: ${access_key}
+    secret_key: ${secret_key}
+```
+ Create secret using below command:
+```
+kubectl -n prometheus create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
+```
+
+
 # Configure Grafana to use Thanos as a data source
 Follow these steps:
 
