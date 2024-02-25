@@ -151,7 +151,7 @@ kubectl create ns thanos
 ```
 Install Thanos Chart with S3-compatible object storage service:
 
-Use Helm to install the Thanos chart. Here's the command to install Thanos with the release name thanos:
+Here's the content of the overridevalues.yaml file::
 
 
 
@@ -227,9 +227,43 @@ config:
     access_key: ${access_key}
     secret_key: ${secret_key}
 ```
+
+Note: To get the secret and access key, you need a policy that allows you to push data to S3. You can use below policy and attach it with a user.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": [
+                "arn:aws:s3:::thanos-prod-north-virginia/*",
+                "arn:aws:s3:::thanos-prod-north-virginia"
+            ]
+        }
+    ]
+}
+```
  Create secret using below command:
 ```
-kubectl -n prometheus create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
+For Europe (namespace: europe):
+
+```
+kubectl -n europe create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
+```
+For United States (namespace: united-states):
+
+```
+kubectl -n united-states create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
+```
+These commands will create the necessary secret containing the Thanos object storage configuration 
 ```
 
 
