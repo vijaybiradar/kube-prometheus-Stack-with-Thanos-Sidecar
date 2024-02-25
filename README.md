@@ -1,4 +1,4 @@
-Installing Prometheus in Europe and United States
+Installing Prometheus in Europe and United States using kube-prometheus-stack
 Create Namespaces:
 
 ```
@@ -218,7 +218,7 @@ helm get values thanos -n thanos -a --revision 1 -o yaml > fullvalues.yaml
 helm get values thanos -n thanos --revision 1 -o yaml > fullvalues.yaml
 ```
 
-Step 4: Configure Grafana to use Thanos as a data source
+# Configure Grafana to use Thanos as a data source
 Follow these steps:
 
 From the Grafana dashboard, click the “Add data source” button.
