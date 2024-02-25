@@ -1710,22 +1710,13 @@ compactor:
 storegateway:
   enabled: true
 ruler:
-  enabled: true
-  alertmanagers:
-    - http://prometheus-operator-alertmanager.monitoring.svc.cluster.local:9093
-  config: |-
-    groups:
-      - name: "metamonitoring"
-        rules:
-          - alert: "PrometheusDown"
-            expr: absent(up{prometheus="monitoring/prometheus-operator"})    
+  enabled: false
 minio:
   enabled: false
-  accessKey:
-    password: "minio"
-  secretKey:
-    password: "KEY"
-  defaultBuckets: "thanos"
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
 ```
 To install Thanos in the Thanos namespace using this configuration file, you can use the following Helm upgrade command:
 
