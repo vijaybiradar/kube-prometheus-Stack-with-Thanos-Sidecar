@@ -252,13 +252,14 @@ Note: To get the secret and access key, you need a policy that allows you to pus
 }
 ```
  Create secret using below command:
-```
-For Europe (namespace: europe):
+
+
+**For Europe (namespace: europe):**
 
 ```
 kubectl -n europe create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
 ```
-For United States (namespace: united-states):
+**For United States (namespace: united-states):**
 
 ```
 kubectl -n united-states create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
@@ -266,6 +267,16 @@ kubectl -n united-states create secret generic thanos-objstore-config --from-fil
 These commands will create the necessary secret containing the Thanos object storage configuration 
 ```
 
+- Port forwarding is needed on the default connection, run on the different terminals: 
+
+```
+kubectl port-forward deployment/prometheus-grafana 3000
+kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 9090
+```
+
+- Default provided username: admin, password: prom-operator
+
+![image](https://user-images.githubusercontent.com/10358317/171119775-74e42538-afde-4cad-ac3b-01bd00b434f5.png)
 
 # Configure Grafana to use Thanos as a data source
 Follow these steps:
@@ -289,6 +300,11 @@ Grafana data source configuration
 Click “Save & Test” to save and test the configuration. If everything is configured correctly, you should see a success message like the one below.
 ![image](https://github.com/vijaybiradar/thanos/assets/38376802/9697d760-59cb-41aa-8742-1c16267d3dd2)
 
+- Monitoring all nodes' resources in terms of CPU, memory, disk space, network transmitted/received
+
+![image](https://user-images.githubusercontent.com/10358317/171121847-88a7ee68-c38e-4fbd-ac72-30900e2c2e86.png)
+
+![image](https://user-images.githubusercontent.com/10358317/171122247-d0e5a80c-0460-4ede-9e3a-8a15fa03b89b.png)
 
 
 
