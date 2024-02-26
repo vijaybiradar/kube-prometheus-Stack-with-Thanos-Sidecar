@@ -265,7 +265,6 @@ kubectl -n europe create secret generic thanos-objstore-config --from-file=thano
 kubectl -n united-states create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml
 ```
 These commands will create the necessary secret containing the Thanos object storage configuration 
-```
 
 - Port forwarding is needed on the default connection, run on the different terminals: 
 
