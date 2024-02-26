@@ -276,7 +276,8 @@ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 9090
 
 - Default provided username: admin, password: prom-operator
 
-![image](https://user-images.githubusercontent.com/10358317/171119775-74e42538-afde-4cad-ac3b-01bd00b434f5.png)
+![image](https://github.com/vijaybiradar/kube-prometheus-Stack-with-Thanos-Sidecar/assets/38376802/069d5b7e-e2ca-43ef-b783-85954d75872f)
+
 
 # Configure Grafana to use Thanos as a data source
 Follow these steps:
@@ -302,9 +303,11 @@ Click “Save & Test” to save and test the configuration. If everything is con
 
 - Monitoring all nodes' resources in terms of CPU, memory, disk space, network transmitted/received
 
-![image](https://user-images.githubusercontent.com/10358317/171121847-88a7ee68-c38e-4fbd-ac72-30900e2c2e86.png)
+![image](https://github.com/vijaybiradar/kube-prometheus-Stack-with-Thanos-Sidecar/assets/38376802/e666134d-db74-4a0f-aab0-300929991136)
 
-![image](https://user-images.githubusercontent.com/10358317/171122247-d0e5a80c-0460-4ede-9e3a-8a15fa03b89b.png)
+
+![image](https://github.com/vijaybiradar/kube-prometheus-Stack-with-Thanos-Sidecar/assets/38376802/e939c5b5-85bc-4a5a-9179-91925e7c48a5)
+
 
 
 
